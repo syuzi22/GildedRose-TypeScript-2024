@@ -7,7 +7,7 @@ describe('Gilded Rose', () => {
   //   expect(items[0].name).toBe('fixme');
   // });
 
-  it('the quality decreases for everything except the special items', () => {
+  it('check the quality decreases for everything except the special items', () => {
     let items = [
       new Item('Aged Brie', 10, 40), 
       new Item('Cheese', 20, 50),
@@ -36,5 +36,14 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBe(42);
     expect(items[1].quality).toBe(43);
     expect(items[2].quality).toBe(0);
+  })
+
+  it('check "Aged Brie" increases in Quality the older it gets', () => {
+    let items = [new Item('Aged Brie', 10, 30)]
+    const gildedRose = new GildedRose(items);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(31);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(32);
   })
 });
