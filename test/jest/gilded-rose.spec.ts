@@ -1,12 +1,6 @@
 import { Item, GildedRose } from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
-  // it('should foo', () => {
-  //   const gildedRose = new GildedRose([new Item('foo', 0, 0)]);
-  //   const items = gildedRose.updateQuality();
-  //   expect(items[0].name).toBe('fixme');
-  // });
-
   it('check the quality decreases for everything except the special items', () => {
     let items = [
       new Item('Aged Brie', 10, 40), 
