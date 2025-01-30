@@ -72,7 +72,6 @@ describe('Gilded Rose', () => {
       new Item('Backstage passes to a TAFKAL80ETC concert', 0, 10),
       new Item('Cheese', -6, 50)
     ]
-
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(80);
@@ -80,5 +79,15 @@ describe('Gilded Rose', () => {
     expect(items[2].quality).toBe(50);
     expect(items[3].quality).toBe(0);
     expect(items[4].quality).toBe(48);
+  })
+
+  it('Checks the sellin for Sulfurus doesnt reduce', () => {
+    let items = [new Item('Sulfuras, Hand of Ragnaros', 25, 80)]
+    const gildedRose = new GildedRose(items);
+    items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(25);
+    items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(25);
+
   })
 });
