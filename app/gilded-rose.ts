@@ -17,7 +17,7 @@ export class GildedRose {
     this.items = items;
   }
 
-  updadeSaleIn(index) {
+  updateSaleIn(index) {
     if (this.items[index].name != 'Sulfuras, Hand of Ragnaros') {
       this.items[index].sellIn = this.items[index].sellIn - 1;
     }
@@ -59,6 +59,8 @@ export class GildedRose {
       const item = this.items[i];
       const name = item.name;
       const sellIn = item.sellIn;
+
+      this.updateSaleIn(i);
 
       if (name === 'Aged Brie') {
         item.quality = this.getAgedBrieQuality(item);
