@@ -1,22 +1,17 @@
 import { Item, GildedRose } from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
-  it('check the quality decreases for everything except the special items', () => {
+  it('check the quality decreases by 1 for normal items', () => {
     let items: Item[] = [
-      new Item('Aged Brie', 10, 40), 
       new Item('Cheese', 20, 50),
-      new Item('Backstage passes to a TAFKAL80ETC concert', 15, 40),
       new Item('Bread', 30, 30),
-      new Item('Sulfuras, Hand of Ragnaros', 25, 80)
-
+      new Item('Milk', 7, 9)
     ];
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
-    expect(items[0].quality).toBeGreaterThan(40)
-    expect(items[1].quality).toBe(49);
-    expect(items[2].quality).toBeGreaterThan(40);
-    expect(items[3].quality).toBe(29);
-    expect(items[4].quality).toBe(80);
+    expect(items[0].quality).toBe(49);
+    expect(items[1].quality).toBe(29);
+    expect(items[2].quality).toBe(8);
   });
 
   it('check Backstage passes to a TAFKAL80ETC concert increases quality then drops to 0', () => {
@@ -24,12 +19,14 @@ describe('Gilded Rose', () => {
       new Item('Backstage passes to a TAFKAL80ETC concert', 10, 40),
       new Item('Backstage passes to a TAFKAL80ETC concert', 5, 40),
       new Item('Backstage passes to a TAFKAL80ETC concert', 0, 40),
+      new Item('Backstage passes to a TAFKAL80ETC concert', 15, 40),
     ];
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(42);
     expect(items[1].quality).toBe(43);
     expect(items[2].quality).toBe(0);
+    expect(items[3].quality).toBe(41);
   })
 
   it('check "Aged Brie" increases in Quality the older it gets', () => {
@@ -46,7 +43,7 @@ describe('Gilded Rose', () => {
       new Item('Sulfuras, Hand of Ragnaros', 25, 80),
       new Item('Milk', 5, 50),
       new Item('Aged Brie', 4, 49),
-      new Item('Backstage passes to a TAFKAL80ETC concert', 3, 47),
+      new Item('Backstage passes to a TAFKAL80ETC concert', 3, 49),
       new Item('Cheese', 6, 50)
     ]
     const gildedRose = new GildedRose(items);
@@ -75,13 +72,15 @@ describe('Gilded Rose', () => {
     expect(items[4].quality).toBe(48);
   })
 
-  it('Checks the sellin for Sulfurus doesnt reduce', () => {
+  it('Checks the sellin and quality for Sulfurus doesnt change', () => {
     let items: Item[] = [new Item('Sulfuras, Hand of Ragnaros', 25, 80)]
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(25);
+    expect(items[0].quality).toBe(80);
     items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(25);
+    expect(items[0].quality).toBe(80);
 
   })
 
