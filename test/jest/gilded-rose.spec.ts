@@ -84,4 +84,17 @@ describe('Gilded Rose', () => {
     expect(items[0].sellIn).toBe(25);
 
   })
+
+  it('checks quality never goes below 0', () => {
+    let items = [
+      new Item('Milk', 6, 0),
+      new Item('Cheese', 3, 0),
+      new Item('Backstage passes to a TAFKAL80ETC concert', 0, 0) 
+    ]
+    const guildedRose = new GildedRose(items);
+    items = guildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+    expect(items[1].quality).toBe(0);
+    expect(items[2].quality).toBe(0);
+  })
 });
