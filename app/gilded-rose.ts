@@ -10,6 +10,13 @@ export class Item {
   }
 }
 
+enum PRODUCT {
+  AGED_BRIE = 'Aged Brie',
+  BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert',
+  SULFURUS = 'Sulfuras, Hand of Ragnaros',
+  CONJURED_CAKE = 'Conjured Mana Cake'
+}
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -71,17 +78,22 @@ export class GildedRose {
   updateQuality(): Item[] {
     for (let item of this.items) {
       const { name } = item;
-      if (name === 'Aged Brie') {
-        item = this.updateAgedBrie(item);
-      } else if (name === 'Backstage passes to a TAFKAL80ETC concert') {
-        item = this.updateBackstagePasses(item);
-      } else if (name === 'Sulfuras, Hand of Ragnaros') {
-        item = this.updateSulfuras(item);
-      } else if (name === 'Conjured Mana Cake') {
-        item = this.updateConjuredManaCake(item);
-      } else {
-        item = this.updateItem(item);
-      }
+      switch(name) {
+        case PRODUCT.AGED_BRIE:
+          item = this.updateAgedBrie(item);
+          break;
+        case PRODUCT.BACKSTAGE_PASSES:
+          item = this.updateBackstagePasses(item);
+          break;
+        case PRODUCT.SULFURUS:
+          item = this.updateSulfuras(item);
+          break;
+        case PRODUCT.CONJURED_CAKE:
+          item = this.updateConjuredManaCake(item)
+          break;
+        default:
+          item = this.updateItem(item);
+      }  
     }
 
     return this.items;
