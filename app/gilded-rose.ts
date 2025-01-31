@@ -52,6 +52,13 @@ export class GildedRose {
     return item;
   }
 
+  updateConjuredManaCake(item: Item): Item {
+    item.quality = Math.max(0, item.quality - 2);
+    this.updateSaleIn(item);
+
+    return item;
+  }
+
   updateItem(item: Item): Item {   
     let quality: number = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
     item.quality = Math.max(0, quality);    
@@ -71,6 +78,8 @@ export class GildedRose {
         item = this.updateBackstagePasses(item);
       } else if (name === 'Sulfuras, Hand of Ragnaros') {
         item = this.updateSulfuras(item);
+      } else if (name === 'Conjured Mana Cake') {
+        item = this.updateConjuredManaCake(item);
       } else {
         item = this.updateItem(item);
       }

@@ -97,4 +97,15 @@ describe('Gilded Rose', () => {
     expect(items[1].quality).toBe(0);
     expect(items[2].quality).toBe(0);
   })
+
+  it('checks that "Conjured" items degrade in Quality twice as fast as normal items', () => {
+    let items: Item[] = [
+      new Item('Conjured Mana Cake', 6, 10),
+      new Item('Conjured Mana Cake', 3, 0)
+    ]
+    const guildedRose = new GildedRose(items);
+    items = guildedRose.updateQuality();
+    expect(items[0].quality).toBe(8);
+    expect(items[1].quality).toBe(0);
+  }) 
 });
