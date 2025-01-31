@@ -52,10 +52,10 @@ export class GildedRose {
     return item;
   }
 
-  updateItem(item: Item) {
-    item.quality = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
+  updateItem(item: Item) {   
+    let quality = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
+    item.quality = Math.max(0, quality);    
     this.updateSaleIn(item);
-
     return item;
   }
 
