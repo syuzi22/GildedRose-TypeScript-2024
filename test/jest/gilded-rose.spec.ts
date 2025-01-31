@@ -2,7 +2,7 @@ import { Item, GildedRose } from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
   it('check the quality decreases for everything except the special items', () => {
-    let items = [
+    let items: Item[] = [
       new Item('Aged Brie', 10, 40), 
       new Item('Cheese', 20, 50),
       new Item('Backstage passes to a TAFKAL80ETC concert', 15, 40),
@@ -20,7 +20,7 @@ describe('Gilded Rose', () => {
   });
 
   it('check Backstage passes to a TAFKAL80ETC concert increases quality then drops to 0', () => {
-    let items = [
+    let items: Item[] = [
       new Item('Backstage passes to a TAFKAL80ETC concert', 10, 40),
       new Item('Backstage passes to a TAFKAL80ETC concert', 5, 40),
       new Item('Backstage passes to a TAFKAL80ETC concert', 0, 40),
@@ -33,7 +33,7 @@ describe('Gilded Rose', () => {
   })
 
   it('check "Aged Brie" increases in Quality the older it gets', () => {
-    let items = [new Item('Aged Brie', 10, 30)]
+    let items: Item[] = [new Item('Aged Brie', 10, 30)]
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(31);
@@ -42,7 +42,7 @@ describe('Gilded Rose', () => {
   })
 
   it('checks item quality doesnt go above 50, or 80 if the item is Sulfuras', () => {
-    let items = [
+    let items: Item[] = [
       new Item('Sulfuras, Hand of Ragnaros', 25, 80),
       new Item('Milk', 5, 50),
       new Item('Aged Brie', 4, 49),
@@ -59,7 +59,7 @@ describe('Gilded Rose', () => {
   })
 
   it('checks that quality degrades twice as fast once the sell by date has passed', () => {
-    let items = [
+    let items: Item[] = [
       new Item('Sulfuras, Hand of Ragnaros', -5, 80),
       new Item('Milk', -5, 50),
       new Item('Aged Brie', -4, 48),
@@ -76,7 +76,7 @@ describe('Gilded Rose', () => {
   })
 
   it('Checks the sellin for Sulfurus doesnt reduce', () => {
-    let items = [new Item('Sulfuras, Hand of Ragnaros', 25, 80)]
+    let items: Item[] = [new Item('Sulfuras, Hand of Ragnaros', 25, 80)]
     const gildedRose = new GildedRose(items);
     items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(25);
@@ -86,7 +86,7 @@ describe('Gilded Rose', () => {
   })
 
   it('checks quality never goes below 0', () => {
-    let items = [
+    let items: Item[] = [
       new Item('Milk', 6, 0),
       new Item('Cheese', 3, 0),
       new Item('Backstage passes to a TAFKAL80ETC concert', 0, 0) 

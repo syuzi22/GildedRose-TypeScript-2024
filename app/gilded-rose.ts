@@ -3,7 +3,7 @@ export class Item {
   sellIn: number;
   quality: number;
 
-  constructor(name, sellIn, quality) {
+  constructor(name: string, sellIn: number, quality: number) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
@@ -17,20 +17,20 @@ export class GildedRose {
     this.items = items;
   }
 
-  updateSaleIn(item) {
+  updateSaleIn(item: Item): Item {
     item.sellIn = item.sellIn - 1;
 
     return item;
   }
 
-  updateAgedBrie(item: Item) {
+  updateAgedBrie(item: Item): Item {
     item.quality = Math.min(50, item.quality + 1);
     this.updateSaleIn(item);
     
     return item;
   }
 
-  updateBackstagePasses(item: Item) {
+  updateBackstagePasses(item: Item): Item {
     const { sellIn }  = item;
 
     if (sellIn <= 0) {
@@ -48,23 +48,22 @@ export class GildedRose {
     return item;
   }
 
-  updateSulfuras(item: Item) {
+  updateSulfuras(item: Item): Item {
     return item;
   }
 
-  updateItem(item: Item) {   
-    let quality = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
+  updateItem(item: Item): Item {   
+    let quality: number = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
     item.quality = Math.max(0, quality);    
     this.updateSaleIn(item);
+    
     return item;
   }
 
-  updateQuality() {
+  updateQuality(): Item[] {
     for (let item of this.items) {
       const { name } = item;
       // TODO
-      // The Quality of an item is never negative
-      // Types
       // Conjured Mana Cake "Conjured" items degrade in Quality twice as fast as normal items
       if (name === 'Aged Brie') {
         item = this.updateAgedBrie(item);
