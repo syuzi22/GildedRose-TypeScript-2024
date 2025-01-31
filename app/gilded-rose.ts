@@ -17,63 +17,63 @@ export class GildedRose {
     this.items = items;
   }
 
-  updateSaleIn(index) {
-    if (this.items[index].name != 'Sulfuras, Hand of Ragnaros') {
-      this.items[index].sellIn = this.items[index].sellIn - 1;
-    }
+  updateSaleIn(item) {
+    item.sellIn = item.sellIn - 1;
+
+    return item;
   }
 
-  getAgedBrieQuality(item: Item) {
-    let quality = item.quality;
-    if (quality < 50) {
-      quality += 1;
-    }
+  updateAgedBrie(item: Item) {
+    item.quality = Math.min(50, item.quality + 1);
+    this.updateSaleIn(item);
     
-    return quality;
+    return item;
   }
 
-  getBackstagePassesQuality(item: Item) {
-    let quality = item.quality;
-    let sellIn = item.sellIn;
+  updateBackstagePasses(item: Item) {
+    const { sellIn }  = item;
 
-    if (sellIn > 0) {
-      if (sellIn > 10) {
-        quality = quality + 1;
-      }
-      if (sellIn > 5 && sellIn <= 10) {
-        quality = quality + 2;
-      }
-
-      if (sellIn <= 5) {
-        quality = quality + 3;
-      }
+    if (sellIn <= 0) {
+      item.quality = 0;
+    } else if (sellIn < 6) {
+      item.quality = item.quality + 3;
+    } else if (sellIn < 11) {
+      item.quality = item.quality + 2;
     } else {
-      quality = 0;
+      item.quality = Math.min(50, item.quality + 1);
     }
-  
-    return Math.min(50, quality) ;
+
+    this.updateSaleIn(item);
+
+    return item;
+  }
+
+  updateSulfuras(item: Item) {
+    return item;
+  }
+
+  updateItem(item: Item) {
+    item.quality = item.sellIn > 0 ? item.quality - 1 : item.quality - 2;
+    this.updateSaleIn(item);
+
+    return item;
   }
 
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      const item = this.items[i];
-      const name = item.name;
-      const sellIn = item.sellIn;
-
-      this.updateSaleIn(i);
-
+    for (let item of this.items) {
+      const { name } = item;
+      // TODO
+      // The Quality of an item is never negative
+      // Types
+      // Conjured Mana Cake "Conjured" items degrade in Quality twice as fast as normal items
       if (name === 'Aged Brie') {
-        item.quality = this.getAgedBrieQuality(item);
+        item = this.updateAgedBrie(item);
       } else if (name === 'Backstage passes to a TAFKAL80ETC concert') {
-        item.quality = this.getBackstagePassesQuality(item);
+        item = this.updateBackstagePasses(item);
       } else if (name === 'Sulfuras, Hand of Ragnaros') {
-        item.quality = item.quality;
+        item = this.updateSulfuras(item);
       } else {
-          if (sellIn > 0) {
-            item.quality = item.quality - 1;
-          } else {
-            item.quality = item.quality - 2;
-          }
+        item = this.updateItem(item);
       }
     }
 
